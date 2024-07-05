@@ -2,7 +2,7 @@
   <Card :title="signup ? $t('Sign up') : $t('Authorization Required')" class="login-container">
     <Form ref="login" :model="formData" :rules="ruleValidate" :label-width="100" label-position="left">
       <FormItem :label="$t('Username')" prop="username">
-        <Input v-model="formData.username" prefix="ios-person-outline" :placeholder="$t('Enter username...')" @on-enter="handleSubmit"/>
+        <Input v-model="formData.username" prefix="ios-person-outline" :placeholder="$t('Enter email or username...')" @on-enter="handleSubmit"/>
       </FormItem>
       <FormItem :label="$t('Password')" prop="password">
         <Input type="password" v-model="formData.password" prefix="ios-lock-outline" :placeholder="$t('Enter password...')" password @on-enter="handleSubmit"/>
@@ -27,7 +27,7 @@ export default {
         password: ''
       },
       ruleValidate: {
-        username: [{required: true, trigger: 'blur', message: this.$t('username is required')}],
+        username: [{required: true, trigger: 'blur', message: this.$t('username or email is required')}],
         password: [{required: true, trigger: 'blur', message: this.$t('password is required')}]
       }
     }
