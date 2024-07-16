@@ -2,8 +2,6 @@
   <div style="padding:5px;">
     <Button style="margin-right: 4px;" type="primary" shape="circle" icon="ios-refresh" @click="handleRefresh" :disabled="loading">{{ $t('Refresh List') }}</Button>
     <Input style="margin-right: 4px;width:200px" v-model="filterString" search @input="handleSearch" :placeholder="$t('Please enter the filter key...')"/>
-    <Button style="margin-right: 4px;" @click="showCmdForm" type="primary" :disabled="cmdStatus.execing > 0">{{ $t('Execute command') }}</Button>
-    <Button v-if="isadmin" style="margin-right: 4px;" @click="showBindForm" type="primary">{{ $t('Bind user') }}</Button>
     <Tooltip :content="$t('Delete offline devices')">
       <Button @click="deleteDevices" type="primary">{{ $t('Delete') }}</Button>
     </Tooltip>
@@ -15,7 +13,7 @@
             <Icon type="ios-arrow-down"/>
         </a>
         <DropdownMenu slot="list">
-          <DropdownItem name="logout">{{ $t('Sign out') }}</DropdownItem>
+          <DropdownItem name="logout">{{ $t('Logout') }}</DropdownItem>
         </DropdownMenu>
       </Dropdown>
     </div>
@@ -34,7 +32,7 @@
         <Tooltip v-if="row.online" placement="top" :content="$t('Access your devices\'s Web')">
           <i class="iconfont icon-web" style="font-size: 40px; color: #409EFF; cursor:pointer;" @click="connectDeviceWeb(row)"/>
         </Tooltip>
-        <span v-if="!row.online" style="margin-left: 10px; color: red">{{ $t('Device offline') }}</span>
+        <span v-if="!row.online" style="margin-left: 10px; color: red">{{ $t('Offline') }}</span>
       </template>
     </Table>
     <Modal v-model="cmdModal" :title="$t('Execute command')" @on-ok="doCmd">
@@ -150,12 +148,12 @@ export default {
           width: 60
         },
         {
-          title: this.$t('Device ID'),
+          title: this.$t('Serial'),
           key: 'id',
           width: 200
         },
         {
-          title: this.$t('Connected time'),
+          title: this.$t('Time Connected'),
           slot: 'connected',
           width: 200
         },
@@ -309,7 +307,7 @@ export default {
         username: this.bindUserData.currentUser
       }).then(() => {
         this.getDevices();
-        this.$Message.success(this.$t('Bind success'));
+        this.$Message.success(this.$t('Device Bound Successfully'));
       });
     },
     unBindUser(id) {
@@ -317,7 +315,7 @@ export default {
         devices: [id]
       }).then(() => {
         this.getDevices();
-        this.$Message.success(this.$t('Unbind success'));
+        this.$Message.success(this.$t('Device Unbound Successfully'));
       });
     },
     deleteDevices() {
@@ -337,7 +335,7 @@ export default {
         devices: offlines.map(s => s.id)
       }).then(() => {
         this.getDevices();
-        this.$Message.success(this.$t('Delete success'));
+        this.$Message.success(this.$t('Device Deleted Successfully'));
       });
     },
     connectDevice(devid) {
@@ -362,8 +360,7 @@ export default {
           });
           return h('div', [
             input,
-            h('p', '127.0.0.1, 127.0.0.1:8080, 127.0.0.1/test.html?a=1'),
-            h('p', 'http://127.0.0.1, https://127.0.0.1')
+            h('p', '127.0.0.1)
           ]);
         },
         onOk: () => {

@@ -7,12 +7,7 @@
       <FormItem :label="$t('Password')" prop="password">
         <Input type="password" v-model="formData.password" prefix="ios-lock-outline" :placeholder="$t('Enter password...')" password @on-enter="handleSubmit"/>
       </FormItem>
-      <FormItem>
-        <Button type="primary" size="large" long @click="handleSubmit">{{ signup ? $t('Sign up') : $t('Sign in') }}</Button>
-      </FormItem>
     </Form>
-    <p v-if="signup" style="text-align: center">{{ $t('Already have an account?') }}<a href="/login" style="text-decoration: none; color: #1c7cd6">{{ $t('Sign in') }}</a></p>
-    <p v-else style="text-align: center">{{ $t('New to Rttys?') }}<a href="/login?signup=1" style="text-decoration: none; color: #1c7cd6">{{ $t('Sign up') }}</a></p>
   </Card>
 </template>
 
@@ -55,7 +50,7 @@ export default {
               sessionStorage.setItem('rttys-admin', res.data.admin);
               this.$router.push('/');
             }).catch(() => {
-              this.$Message.error(this.$t('Signin Fail! username or password wrong.').toString());
+              this.$Message.error(this.$t('Login Fail! username/email or password wrong.').toString());
             });
           }
         }
